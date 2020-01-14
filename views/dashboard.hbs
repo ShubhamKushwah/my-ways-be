@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>My Ways</title>
+  <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css">
+
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    Dashboard
+    <hr>
+    <ul>
+      {{#each students}}
+      <li>Username: {{username}} - Present: {{present}} <button class="btn
+      {{#if present}}btn-danger{{else}}btn-primary{{/if}}
+      " onclick="clickPresent({ 'username': '{{username}}', present: {{present}} })">
+          {{#if present}}
+          Mark Absent
+          {{else}}
+          Mark Present
+          {{/if}}
+        </button></li>
+      <br>
+      {{/each}}
+    </ul>
+  </div>
+  <script src="/assets/jquery/index.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="/assets/bootstrap/js/bootstrap.js"></script>
+
+  <script>
+    async function clickPresent({ username, present }) {
+      const res = await fetch(`/mark/present/${username}/${!present}`)
+      if (res.ok) location.reload();
+      else alert('Failed to update!');
+    }
+  </script>
+</body>
+
+</html>
